@@ -39,3 +39,4 @@ jspm_packages
 
 # Python Dependencies
 dependencies
+.env.local
