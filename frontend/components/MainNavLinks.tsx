@@ -56,10 +56,6 @@ export function MainNavLinks() {
                         >
                             <NavigationMenuLink
                                 className={`${navigationMenuTriggerStyle()} border: 2px`}
-                                style={{
-                                    border: "2px solid black",
-                                    padding: "16px",
-                                }}
                             >
                                 Login
                             </NavigationMenuLink>
