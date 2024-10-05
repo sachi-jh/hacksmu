@@ -16,23 +16,23 @@ export function MainNavLinks() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/about" legacyBehavior passHref>
+          <Link href="/group" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              About Us
+              Support Groups
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/help" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Help
+              Exercise
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/login" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Login
+              Ebby
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
@@ -42,7 +42,7 @@ export function MainNavLinks() {
               className={`${navigationMenuTriggerStyle()} border: 2px`}
               style={{ border: "2px solid black", padding: "16px" }}
             >
-              Getting Started
+              Login
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
