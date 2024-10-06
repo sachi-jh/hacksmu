@@ -28,7 +28,9 @@ const GetStarted = () => {
         <div className="mt-10 space-y-3 px-7">
           <h1 className="text-4xl text-white">Breathe</h1>
           <p className="text-black">
-            Slow, deep breathing calms the mind and reduces stress.
+            Deep breathing helps calm the nervous system, reducing stress and
+            anxiety. It improves focus and enhances overall mental clarity and
+            emotional balance.
           </p>
           <div className="">
             <Link href="/excercise/breathe">
@@ -47,10 +49,12 @@ const GetStarted = () => {
         <div className="mt-10 space-y-3 px-7">
           <h1 className="text-4xl text-white">Stretch</h1>
           <p className="text-black">
-            Slow, deep breathing calms the mind and reduces stress.
+            Stretching releases muscle tension, increases flexibility, and
+            enhances circulation. It can improve mood and relieve stress,
+            promoting a relaxed state of mind.
           </p>
           <div className="">
-            <Link href="/excercise/breathe">
+            <Link href="/excercise/stretch">
               <Button variant={"secondary"} className="text-1xl rounded-2xl">
                 Start
               </Button>
@@ -66,10 +70,12 @@ const GetStarted = () => {
         <div className="mt-10 space-y-3 px-7">
           <h1 className="text-4xl text-white">Workout</h1>
           <p className="text-black">
-            Slow, deep breathing calms the mind and reduces stress.
+            Exercise boosts endorphins, the body's natural mood lifters. Regular
+            physical activity reduces symptoms of anxiety and depression,
+            enhancing overall emotional well-being and resilience.
           </p>
           <div className="">
-            <Link href="/excercise/breathe">
+            <Link href="/excercise/workout">
               <Button variant={"secondary"} className="text-1xl rounded-2xl">
                 Start
               </Button>

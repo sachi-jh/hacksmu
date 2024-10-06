@@ -5,16 +5,19 @@ import React, { useContext, useEffect, useState } from "react";
 import { SocketContext } from "./SocketContext";
 import WebcamStream from "./WebcamStreamCapture";
 import SquatCounter from "./SquatCounter";
+import Link from "next/link";
+import { Button } from "./ui/button";
 
-const ExerciseDetection: React.FC = () => {
+const SquatDetection: React.FC = () => {
   const { socket } = useContext(SocketContext);
-  const [count, setCount] = useState(0);
+  const [squatCount, setSquatCount] = useState(0);
 
   useEffect(() => {
     if (socket) {
       socket.on("feedback", (data: any) => {
+        console.log(data);
         // You can also handle 'feedback' messages if needed
-        setCount(data.count);
+        setSquatCount(data.count);
       });
     }
 
@@ -40,13 +43,20 @@ const ExerciseDetection: React.FC = () => {
   }
 
   return (
-    <div className="absolute mt-2 left-1/2 transform -translate-x-1/2  w-[640px] h-[480px]">
+    <div className=" rounded-2xl">
       <WebcamStream onFrameCaptured={handleFrameCaptured} />
       <div>
-        <SquatCounter count={count} />
+        <SquatCounter count={squatCount} />
       </div>
+      {squatCount >= 10 && (
+        <Link href="/excercise">
+          <Button variant={"secondary"} className="rounded-2xl text-xl">
+            Finished
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };
 
-export default ExerciseDetection;
+export default SquatDetection;

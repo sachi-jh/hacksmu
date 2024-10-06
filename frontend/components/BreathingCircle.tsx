@@ -33,9 +33,9 @@ const BreathingCircle: React.FC = () => {
         <motion.div
           className="relative flex justify-center items-center"
           initial={{ scale: 0.9 }}
-          animate={{ scale: [0.9, 1.2, 0.9] }}
+          animate={{ scale: [0.9, 3, 0.9] }}
           transition={{
-            duration: 4, // Simulate slow inhale/exhale for relaxation
+            duration: 10, // Simulate slow inhale/exhale for relaxation
             repeat: Infinity,
             repeatType: "loop",
           }}
@@ -46,7 +46,7 @@ const BreathingCircle: React.FC = () => {
             style={{ boxShadow: "0 0 40px rgba(136, 183, 205)" }} // Increase shadow size too
           >
             <div className="text-center z-10">
-              <h1 className="text-3xl">Breathe</h1>
+              <h1 className="text-3xl">BREATHE</h1>
               <Counter seconds={10} />
               {showButton ? (
                 <Link href="/excercise/stretch">

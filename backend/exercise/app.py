@@ -32,6 +32,9 @@ pose = mp_pose.Pose(min_detection_confidence=0.5,
 counters = {}  # Dictionary to keep track of squat counts per client
 stages = {}    # Dictionary to keep track of stages per client
 is_doing_stretch = {}  # Dictionary to keep track of standing forward bend status per client
+bend_counters = {}  # Dictionary to keep track of forward bend counts per client
+bend_stages = {}  # Dictionary to keep track of stages for forward bend per client
+is_sitting_criss_cross = {}  # Dictionary to keep track of criss-cross apple sauce status per client
 
 @socketio.on('connect')
 def handle_connect():
@@ -39,6 +42,9 @@ def handle_connect():
     counters[request.sid] = 0
     stages[request.sid] = None
     is_doing_stretch[request.sid] = False
+    bend_counters[request.sid] = 0
+    bend_stages[request.sid] = "up"  # Initialize to "up" stage
+    is_sitting_criss_cross[request.sid] = False
     emit('connected', {'data': 'Connected to server'})
 
 @socketio.on('disconnect')
@@ -47,6 +53,9 @@ def handle_disconnect():
     counters.pop(request.sid, None)
     stages.pop(request.sid, None)
     is_doing_stretch.pop(request.sid, None)
+    bend_counters.pop(request.sid, None)
+    bend_stages.pop(request.sid, None)
+    is_sitting_criss_cross.pop(request.sid, None)
 
 @socketio.on('video_frame')
 def handle_video_frame(data):
@@ -58,10 +67,11 @@ def handle_video_frame(data):
     frame = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
     
     # Process the frame
-    feedback, count, stretch_status = process_frame(frame, sid)
+    feedback, count, stretch_status, bend_count, criss_cross_status = process_frame(frame, sid)
 
     # Send feedback to the client
-    emit('feedback', {'feedback': feedback, 'count': count, 'is_doing_stretch': stretch_status})
+    emit('feedback', {'feedback': feedback, 'count': count, 'is_doing_stretch': stretch_status, 'bend_count': bend_count, 'is_sitting_criss_cross': criss_cross_status})
+    
 
 def process_frame(frame, sid):
     # Recolor image to RGB
@@ -79,16 +89,22 @@ def process_frame(frame, sid):
         feedback, count = process_squat(landmarks, sid)
         
         # Standing forward bend detection logic
-        stretch_status = process_standing_forward_bend(landmarks, sid)
+        stretch_status, bend_count = process_standing_forward_bend(landmarks, sid)
         is_doing_stretch[sid] = stretch_status
+
+        # Sitting criss-cross apple sauce detection logic
+        criss_cross_status = process_criss_cross_applesauce(landmarks, sid)
+        is_sitting_criss_cross[sid] = criss_cross_status
     
     except Exception as e:
         print(e)
         feedback = "No person detected"
         count = counters.get(sid, 0)
         stretch_status = False
+        bend_count = bend_counters.get(sid, 0)
+        criss_cross_status = False
 
-    return feedback, count, stretch_status
+    return feedback, count, stretch_status, bend_count, criss_cross_status
 
 def process_squat(landmarks, sid):
     # Get coordinates for left leg
@@ -116,18 +132,51 @@ def process_squat(landmarks, sid):
     return feedback, count
 
 def process_standing_forward_bend(landmarks, sid):
-    # Get coordinates for hips and ankles
+    # Get coordinates for left hand, left foot, and knee
+    left_hand = [landmarks[mp_pose.PoseLandmark.LEFT_INDEX.value].x,
+                 landmarks[mp_pose.PoseLandmark.LEFT_INDEX.value].y]
+    left_foot = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x,
+                 landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
+    left_knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,
+                 landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+    
+    # Calculate vertical distance between left hand and left foot
+    hand_to_foot_distance = np.linalg.norm(np.array(left_hand) - np.array(left_foot))
+    
+    # Calculate knee angle to ensure the leg is straight
     hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
            landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
-    ankle = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x,
-             landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
-    
-    # Calculate vertical distance between hip and ankle
-    vertical_distance = hip[1] - ankle[1]
+    knee_angle = calculate_angle(hip, left_knee, left_foot)
 
     # Standing forward bend detection logic
-    # If the hip is close to the ankle vertically, it indicates a bend
-    if vertical_distance < 0.2:  # Threshold value, adjust as needed
+    # If the hand is close to the foot and the leg is straight, it indicates a bend
+    if hand_to_foot_distance < 0.1 and knee_angle > 160:  # Threshold values, adjust as needed
+        if bend_stages[sid] == "up":
+            bend_stages[sid] = "bending"
+    elif hand_to_foot_distance > 0.2 and bend_stages[sid] == "bending":
+        bend_stages[sid] = "up"
+        bend_counters[sid] += 1
+        print(f"Bend Count for {sid}: {bend_counters[sid]}")
+    
+    return bend_stages[sid] == "bending", bend_counters[sid]
+
+def process_criss_cross_applesauce(landmarks, sid):
+    # Get coordinates for left and right knees and ankles
+    left_knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,
+                 landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+    right_knee = [landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].x,
+                  landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].y]
+    left_ankle = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x,
+                  landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
+    right_ankle = [landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value].x,
+                   landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value].y]
+    
+    # Check if knees are close to each other and ankles are crossed
+    knees_distance = np.linalg.norm(np.array(left_knee) - np.array(right_knee))
+    ankles_distance = np.linalg.norm(np.array(left_ankle) - np.array(right_ankle))
+    
+    # Threshold values to determine if sitting criss-cross
+    if knees_distance < 0.2 and ankles_distance < 0.2:  # Adjust thresholds as needed
         return True
     else:
         return False
