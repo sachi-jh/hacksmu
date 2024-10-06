@@ -7,14 +7,14 @@ import { Fredoka } from "next/font/google"
 const fredoka = Fredoka({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    title: "Ebby",
-    description: "AI Mental and Emotional Health Assistant",
+  title: "Ebby",
+  description: "AI Mental and Emotional Health Assistant",
 };
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
     return (
         <html lang="en">
