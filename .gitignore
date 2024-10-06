@@ -40,3 +40,4 @@ jspm_packages
 # Python Dependencies
 dependencies
 .env.local
+.DS_Store

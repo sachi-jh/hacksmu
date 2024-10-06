@@ -84,8 +84,8 @@ const WebcamStream: React.FC<WebcamStreamProps> = ({ onFrameCaptured }) => {
       <video
         ref={videoRef}
         style={{
-          width: "640px",
-          height: "480px",
+          width: "1080px",
+          height: "680px",
           transform: "scaleX(-1)", // Flip the video horizontally
         }}
         autoPlay
