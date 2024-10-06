@@ -4,6 +4,8 @@ import React from "react";
 import { Tilt } from "react-tilt";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Boat from "@/assets/boat-exercise.png";
+import Image from "next/image";
 
 const defaultOptions = {
   reverse: false, // reverse the tilt direction
@@ -19,70 +21,104 @@ const defaultOptions = {
 
 const GetStarted = () => {
   return (
-    <div className="flex h-1/2 mt-12 justify-evenly min-h-screen">
-      <Tilt
-        options={defaultOptions}
-        style={{ height: 350, width: 300 }}
-        className="bg-main rounded-2xl shadow-2xl opacity-70"
-      >
-        <div className="mt-10 space-y-3 px-7">
-          <h1 className="text-4xl text-white">Breathe</h1>
-          <p className="text-black">
-            Deep breathing helps calm the nervous system, reducing stress and
-            anxiety. It improves focus and enhances overall mental clarity and
-            emotional balance.
-          </p>
-          <div className="">
-            <Link href="/excercise/breathe">
-              <Button variant={"secondary"} className="text-1xl rounded-2xl ">
-                Start
-              </Button>
-            </Link>
+    <div className="flex mt-12 justify-evenly min-h-screen">
+      <div className="absolute left-0 w-full h-1/2 bg-white" />
+      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-[#3e586c] " />
+      <div>
+        <Tilt
+          options={defaultOptions}
+          style={{ height: 350, width: 300 }}
+          className="bg-main rounded-2xl shadow-2xl opacity-80 mt-20 text-opacity-100"
+        >
+          <div className="mt-10 space-y-3 px-7">
+            <h1 className="text-4xl text-white">Breathe</h1>
+            <p className="text-black text-lg">
+              Deep breathing helps calm the nervous system, reducing stress and
+              anxiety. It improves focus and enhances overall mental clarity and
+              emotional balance.
+            </p>
+            <div className="">
+              <Link href="/excercise/breathe">
+                <Button
+                  variant={"secondary"}
+                  className="text-1xl rounded-2xl absolute bottom-5 left-5 "
+                >
+                  Start
+                </Button>
+              </Link>
+            </div>
           </div>
-        </div>
-      </Tilt>
+        </Tilt>
+      </div>
+
       <Tilt
         options={defaultOptions}
         style={{ height: 350, width: 300 }}
-        className="bg-main rounded-2xl shadow-2xl opacity-70"
+        className="bg-main rounded-2xl shadow-2xl opacity-80 mt-20 text-opacity-100"
       >
         <div className="mt-10 space-y-3 px-7">
-          <h1 className="text-4xl text-white">Stretch</h1>
-          <p className="text-black">
+          <h1 className="text-4xl text-white ">Stretch</h1>
+          <p className="text-black text-lg">
             Stretching releases muscle tension, increases flexibility, and
             enhances circulation. It can improve mood and relieve stress,
             promoting a relaxed state of mind.
           </p>
           <div className="">
             <Link href="/excercise/stretch">
-              <Button variant={"secondary"} className="text-1xl rounded-2xl">
+              <Button
+                variant={"secondary"}
+                className="text-1xl rounded-2xl absolute bottom-5 left-5"
+              >
                 Start
               </Button>
             </Link>
           </div>
         </div>
       </Tilt>
+
       <Tilt
         options={defaultOptions}
         style={{ height: 350, width: 300 }}
-        className="bg-main rounded-2xl shadow-2xl opacity-70"
+        className="bg-main rounded-2xl shadow-2xl opacity-80 mt-20 text-opacity-100"
       >
         <div className="mt-10 space-y-3 px-7">
           <h1 className="text-4xl text-white">Workout</h1>
-          <p className="text-black">
+          <p className="text-black ">
             Exercise boosts endorphins, the body's natural mood lifters. Regular
             physical activity reduces symptoms of anxiety and depression,
             enhancing overall emotional well-being and resilience.
           </p>
           <div className="">
             <Link href="/excercise/workout">
-              <Button variant={"secondary"} className="text-1xl rounded-2xl">
+              <Button
+                variant={"secondary"}
+                className="text-1xl rounded-2xl absolute bottom-5 left-5"
+              >
                 Start
               </Button>
             </Link>
           </div>
         </div>
       </Tilt>
+
+      <Image
+        src={Boat}
+        alt="boat"
+        className="absolute bottom-20 left-1/4 transform -translate-x-1/2 z-0"
+        style={{ width: "325px" }} // Optional: Adjust size as needed
+      />
+      <Image
+        src={Boat}
+        alt="boat"
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-0"
+        style={{ width: "325px" }} // Optional: Adjust size as needed
+      />
+      <Image
+        src={Boat}
+        alt="boat"
+        className="absolute bottom-5 left-3/4 transform -translate-x-1/2 z-0"
+        style={{ width: "325px" }} // Optional: Adjust size as needed
+      />
     </div>
   );
 };

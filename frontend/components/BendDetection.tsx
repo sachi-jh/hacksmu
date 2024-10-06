@@ -51,7 +51,9 @@ const BendDetection: React.FC = () => {
       </div>
       {bendCount >= 10 && (
         <Link href="/excercise/workout">
-          <Button variant={"secondary"}>Next</Button>
+          <Button variant={"secondary"} className="text-1xl rounded-2xl">
+            Next
+          </Button>
         </Link>
       )}
     </div>
