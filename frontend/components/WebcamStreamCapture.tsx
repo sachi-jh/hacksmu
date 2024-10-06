@@ -75,7 +75,7 @@ const WebcamStream: React.FC<WebcamStreamProps> = ({ onFrameCaptured }) => {
       };
 
       // Set up an interval to capture frames every 200 milliseconds (adjustable)
-      intervalRef.current = setInterval(captureFrame, 50); // Captures a frame every 200ms
+      intervalRef.current = setInterval(captureFrame, 100); // Captures a frame every 200ms
     }
   };
 
