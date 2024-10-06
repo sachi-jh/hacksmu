@@ -53,7 +53,7 @@ export default function Groups() {
                 <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="font-semibold hover:bg-main hover:text-white py-2 px-3 rounded-2xl text-2xl text-main"
+                    className="font-semibold hover:bg-main hover:text-white py-2 px-3 rounded-2xl text-2xl text-main border border-4 border-main"
                     onClick={() => {
                         router.push("/questionaire");
                     }}
@@ -62,7 +62,7 @@ export default function Groups() {
                 </motion.button>
             </div>
             <h1 className="text-3xl font-bold mt-24 mb-12">Support Groups</h1>
-            <div className="mx-16 grid grid-cols-4 text-2xl text-main font-semibold mt-4">
+            <div className=" grid grid-cols-4 text-2xl text-main font-semibold mt-4 text-center">
                 <h1>NAME</h1>
                 <h1>LAST MESSAGE</h1>
                 <h1>UNREAD MESSAGES</h1>
@@ -86,7 +86,7 @@ export default function Groups() {
                                 setConvID(conversation.id);
                             }}
                             key={conversation.id}
-                            className="mx-16 grid grid-cols-4 my-2 items-center text-xl rounded-2xl px-3 py-2"
+                            className="grid grid-cols-4 my-2 items-center text-xl rounded-2xl px-3 py-2 text-center"
                         >
                             <h1>{conversation.subject || "No Subject"}</h1>
                             <h1>

@@ -134,7 +134,7 @@ export default function JoinGroup(props: any) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={updateParticipant}
-                className="cursor-pointer shadow-2xl rounded-2xl p-16 border border-gray-400 border-opacity-40 h-fit w-fit flex justify-center"
+                className="cursor-pointer shadow-2xl rounded-2xl px-6 py-16 border border-gray-400 border-opacity-40 h-52 w-64 flex justify-center items-center"
             >
                 <h1
                     className={
