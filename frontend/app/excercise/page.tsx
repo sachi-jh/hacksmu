@@ -34,7 +34,7 @@ const GetStarted = () => {
       <Tilt
         options={defaultOptions}
         style={{ height: 350, width: 300 }}
-        className="bg-main rounded-2xl shadow-2xl opacity-80 mt-20 text-opacity-100"
+        className="bg-main rounded-2xl shadow-2xl opacity-80 mt-20 text-opacity-100 z-10"
       >
         <div className="mt-10 space-y-3 px-7">
           <h1 className="text-4xl text-white">Breathe</h1>
@@ -57,7 +57,7 @@ const GetStarted = () => {
       <Tilt
         options={defaultOptions}
         style={{ height: 350, width: 300 }}
-        className="bg-main rounded-2xl shadow-2xl opacity-80 mt-20 text-opacity-100"
+        className="bg-main rounded-2xl shadow-2xl opacity-80 mt-20 text-opacity-100 z-10"
       >
         <div className="mt-10 space-y-3 px-7">
           <h1 className="text-4xl text-white ">Stretch</h1>
@@ -80,7 +80,7 @@ const GetStarted = () => {
       <Tilt
         options={defaultOptions}
         style={{ height: 350, width: 300 }}
-        className="bg-main rounded-2xl shadow-2xl opacity-80 mt-20 text-opacity-100"
+        className="bg-main rounded-2xl shadow-2xl opacity-80 mt-20 text-opacity-100 z-10"
       >
         <div className="mt-10 space-y-3 px-7">
           <h1 className="text-4xl text-white">Workout</h1>
