@@ -27,10 +27,17 @@ const ExerciseDetection: React.FC = () => {
   }, [socket]);
 
   const handleFrameCaptured = (dataURL: string) => {
-    if (socket) {
-      socket.emit("video_frame", dataURL);
+    if (!socket) {
+      console.error("Socket not connected yet");
+      return;
     }
+    console.log("Emitting video frame");
+    socket.emit("video_frame", dataURL);
   };
+
+  if (!socket) {
+    return <div>Connecting to server...</div>; // Show a loading state while the socket is being initialized
+  }
 
   return (
     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[640px] h-[480px]">

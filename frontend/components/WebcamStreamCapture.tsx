@@ -69,14 +69,13 @@ const WebcamStream: React.FC<WebcamStreamProps> = ({ onFrameCaptured }) => {
 
           // Convert canvas image to data URL
           const dataURL = canvas.toDataURL("image/jpeg", 0.5); // Adjust quality if needed
-
           // Call the callback function with the data URL
           onFrameCaptured(dataURL);
         }
       };
 
       // Set up an interval to capture frames every 200 milliseconds (adjustable)
-      intervalRef.current = setInterval(captureFrame, 200); // Captures a frame every 200ms
+      intervalRef.current = setInterval(captureFrame, 50); // Captures a frame every 200ms
     }
   };
 
@@ -84,7 +83,11 @@ const WebcamStream: React.FC<WebcamStreamProps> = ({ onFrameCaptured }) => {
     <div>
       <video
         ref={videoRef}
-        style={{ width: "640px", height: "480px" }}
+        style={{
+          width: "640px",
+          height: "480px",
+          transform: "scaleX(-1)", // Flip the video horizontally
+        }}
         autoPlay
         muted
       />

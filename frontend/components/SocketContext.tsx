@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useEffect, useRef } from "react";
+import React, { createContext, useEffect, useState, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 
 interface SocketContextProps {
@@ -14,6 +14,8 @@ export const SocketContext = createContext<SocketContextProps>({
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const [socket, setSocket] = useState<Socket | null>(null);
+
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
@@ -25,6 +27,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
     socket.on("connect", () => {
       console.log("Connected to server");
+      setSocket(socket);
     });
 
     socket.on("connected", (data: any) => {
