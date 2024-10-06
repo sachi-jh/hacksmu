@@ -8,9 +8,7 @@ const config: Config = {
         "./app/**/*.{js,ts,jsx,tsx,mdx}",
     ],
     theme: {
-        fontFamily: {
-            rubik: ["Rubik", "sans-serif"],
-        },
+        
         extend: {
             colors: {
                 main: "#88b7cd",
