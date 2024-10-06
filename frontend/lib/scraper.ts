@@ -1,49 +1,32 @@
-import fetch from 'node-fetch';
-import fs from 'fs';
-import path from 'path';
+import axios from 'axios';
+import cheerio from 'cheerio';
 
-const scraperAPIKey = 'a8c0494f97966a697eae597bd17e6a90';
-const urlsToScrape = [
-  'https://www.smu.edu/studentaffairs/drbobsmithhealthcenter/counseling-services/mentalhealthapps/smu-teletherapy',
-  'https://www.smu.edu/studentaffairs/drbobsmithhealthcenter',
-  'https://www.smu.edu/studentaffairs/drbobsmithhealthcenter/counseling-services',
-  'https://www.pointandclicksolutions.com/',
-  'https://www.smu.edu/studentaffairs/drbobsmithhealthcenter/medical-services',
-  'https://www.smu.edu/studentaffairs/campusrecreation/programs/fitness',
+// Function to scrape a URL using ScraperAPI
+export async function scrapeWithScraperAPI(url: string) {
+  const API_KEY = 'a8c0494f97966a697eae597bd17e6a90'; // Replace with your ScraperAPI key
+  const apiUrl = `http://api.scraperapi.com?api_key=${API_KEY}&url=${url}`;
 
-  // Add more URLs as needed
-];
-
-// Path to store the JSON file
-const filePath = path.join('lib', 'scrapedData.json');
-
-async function scrapeAndStore() {
-  const scrapedData: { url: string; scrapedData: string; timestamp: string }[] = [];
-
-  for (const url of urlsToScrape) {
-    const apiUrl = `https://api.scraperapi.com/?api_key=${scraperAPIKey}&url=${encodeURIComponent(url)}`;
+  try {
+    // Fetching the page through ScraperAPI
+    const { data } = await axios.get(apiUrl);
     
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.text();  // Assuming the response is HTML or JSON
+    // Load HTML with Cheerio
+    const $ = cheerio.load(data);
 
-      // Save the scraped data to the array
-      scrapedData.push({
-        url: url,
-        scrapedData: data,
-        timestamp: new Date().toISOString(),
-      });
+    // Extracting specific content (example: paragraphs with relevant data)
+    const scrapedContent: string[] = [];
+    
+    $('p').each((i, el) => {
+      const text = $(el).text().trim();
+      if (text) {
+        scrapedContent.push(text);
+      }
+    });
 
-      console.log(`Data from ${url} has been scraped and added to the array.`);
+    return scrapedContent; // Return extracted paragraphs
 
-    } catch (error) {
-      console.error(`Error scraping ${url}:`, error);
-    }
+  } catch (error) {
+    console.error('Error during scraping:', error);
+    return null;
   }
-
-  // Write the scraped data to a JSON file
-  fs.writeFileSync(filePath, JSON.stringify(scrapedData, null, 2));
-  console.log('Scraped data has been saved to scrapedData.json.');
 }
-
-scrapeAndStore();

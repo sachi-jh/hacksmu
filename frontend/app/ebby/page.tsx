@@ -38,7 +38,7 @@ const Chatbot: React.FC = () => {
 
   const handleDefaultPrompt = (prompt: string) => {
     setUserMessage(prompt); // Set the user message to the default prompt
-    handleSubmit(new Event('submit') as unknown as React.FormEvent); // Call handleSubmit to send the prompt
+    handleSubmit({ preventDefault: () => {} } as React.FormEvent); // Call handleSubmit to send the prompt
   };
 
   return (
