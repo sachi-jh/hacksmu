@@ -4,11 +4,11 @@ import * as React from "react";
 import Link from "next/link";
 
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
+    NavigationMenu,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 import { useUser } from "@propelauth/nextjs/client";
@@ -65,9 +65,7 @@ export function MainNavLinks() {
                         </Link>
                     ) : (
                         <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="hover:bg-main hover:text-white py-2 px-3 rounded-3xl text-2xl text-main"
+                            className="hover:bg-main font-semibold hover:text-white py-2 px-3 rounded-2xl text-2xl text-main"
                             onClick={() =>
                                 router.push(
                                     "https://4525409.propelauthtest.com/account"

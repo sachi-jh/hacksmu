@@ -1,6 +1,8 @@
 "use client";
 import JoinGroup from "@/components/JoinGroup";
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 type Question = {
     id: number;
@@ -66,6 +68,7 @@ const questions: Question[] = [
 ];
 
 const Questionnaire: React.FC = () => {
+    const router = useRouter();
     const [answers, setAnswers] = useState<Answers>({});
     const [results, setResults] = useState<string[]>([]);
 
@@ -125,7 +128,7 @@ const Questionnaire: React.FC = () => {
                     <p className="mb-2">{question.text}</p>
                     <div>
                         <button
-                            className={`mr-2 px-3 py-1 rounded ${
+                            className={`mr-2 px-3 py-1 rounded-2xl ${
                                 answers[question.id] === "yes"
                                     ? "bg-main text-white"
                                     : "bg-gray-200"
@@ -135,7 +138,7 @@ const Questionnaire: React.FC = () => {
                             Yes
                         </button>
                         <button
-                            className={`px-3 py-1 rounded ${
+                            className={`px-3 py-1 rounded-2xl ${
                                 answers[question.id] === "no"
                                     ? "bg-main text-white"
                                     : "bg-gray-200"
@@ -148,10 +151,10 @@ const Questionnaire: React.FC = () => {
                 </div>
             ))}
             <button
-                className="bg-main text-white px-4 py-2 rounded mt-4 hover:scale-110 transition-all"
+                className="bg-main text-white px-4 py-2 rounded-2xl mt-4 hover:scale-110 transition-all"
                 onClick={calculateResults}
             >
-                Submit
+                Submit (then scroll down)
             </button>
             {results.length > 0 && (
                 <div className="mt-4">
@@ -171,8 +174,30 @@ const Questionnaire: React.FC = () => {
                         professional for a comprehensive evaluation and
                         personalized advice.
                     </p>
-                    <h1 className="text-xl my-10">Join By Clicking On Cards Below</h1>
-                    <JoinGroup name="Depression Support Group" />
+                    <h1 className="text-xl my-10">
+                        Join By Clicking On Cards Below
+                    </h1>
+                    <div className="flex justify-evenly">
+                        <JoinGroup
+                            name="PTSD Support Group"
+                            conversationID="PTSD"
+                        />
+                        <JoinGroup
+                            name="Depression Support Group"
+                            conversationID="Depression"
+                        />
+                        <JoinGroup name="ADHD" conversationID="ADHD" />
+                    </div>
+                    <div className="flex justify-center mt-8">
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            className="bg-main text-white px-4 py-2 rounded-2xl hover:scale-110 transition-all text-2xl"
+                            onClick={() => router.push("/groups")}
+                        >
+                            Return to Groups
+                        </motion.button>
+                    </div>
                 </div>
             )}
         </div>

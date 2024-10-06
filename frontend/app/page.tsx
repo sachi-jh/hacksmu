@@ -46,7 +46,7 @@ export default function Home() {
                         viewport={{ once: false }} // Animates only once when it comes into view
                     >
                         <Image
-                            className="mt-48 rounded-3xl object-cover w-full"
+                            className="mt-48 rounded-2xl object-cover w-full"
                             src={Wave}
                             alt=""
                             width={500}
@@ -63,7 +63,7 @@ export default function Home() {
                         viewport={{ once: false }} // Ensures animation happens only once
                     >
                         <Image
-                            className="mt-24 rounded-3xl object-cover w-full"
+                            className="mt-24 rounded-2xl object-cover w-full"
                             src={Clouds}
                             alt=""
                             width={500}
@@ -80,7 +80,7 @@ export default function Home() {
                         viewport={{ once: false }} // Ensures animation happens only once
                     >
                         <Image
-                            className="rounded-3xl object-cover w-full"
+                            className="rounded-2xl object-cover w-full"
                             src={Beach}
                             alt=""
                             width={500}
@@ -126,7 +126,7 @@ export default function Home() {
                         onClick={() => {
                             router.push("https://4525409.propelauthtest.com/");
                         }}
-                        className="rounded-3xl mt-10 px-3 py-2 text-main hover:bg-main hover:text-white text-3xl font-semibold"
+                        className="rounded-2xl mt-10 px-3 py-2 text-main hover:bg-main hover:text-white text-3xl font-semibold"
                     >
                         Get started
                     </motion.button>
