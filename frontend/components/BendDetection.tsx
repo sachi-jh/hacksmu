@@ -10,54 +10,52 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 
 const BendDetection: React.FC = () => {
-  const { socket } = useContext(SocketContext);
-  const [bendCount, setBendCount] = useState(0);
+    const { socket } = useContext(SocketContext);
+    const [bendCount, setBendCount] = useState(0);
 
-  useEffect(() => {
-    if (socket) {
-      socket.on("feedback", (data: any) => {
-        console.log(data);
-        // You can also handle 'feedback' messages if needed
-        setBendCount(data.bend_count);
-      });
-    }
+    useEffect(() => {
+        if (socket) {
+            socket.on("feedback", (data: any) => {
+                console.log(data);
+                // You can also handle 'feedback' messages if needed
+                setBendCount(data.bend_count);
+            });
+        }
 
-    // Cleanup on component unmount
-    return () => {
-      if (socket) {
-        socket.off("feedback");
-      }
+        // Cleanup on component unmount
+        return () => {
+            if (socket) {
+                socket.off("feedback");
+            }
+        };
+    }, [socket]);
+
+    const handleFrameCaptured = (dataURL: string) => {
+        if (!socket) {
+            console.error("Socket not connected yet");
+            return;
+        }
+        console.log("Emitting video frame");
+        socket.emit("video_frame", dataURL);
     };
-  }, [socket]);
 
-  const handleFrameCaptured = (dataURL: string) => {
     if (!socket) {
-      console.error("Socket not connected yet");
-      return;
+        return <div>Connecting to server...</div>; // Show a loading state while the socket is being initialized
     }
-    console.log("Emitting video frame");
-    socket.emit("video_frame", dataURL);
-  };
+    return (
+        <div>
+            <WebcamStream onFrameCaptured={handleFrameCaptured} />
+            <div>
+                <BendCounter count={bendCount} />
+            </div>
+            {bendCount >= 10 && (
+                <Link href="/excercise/workout">
+                    <Button variant={"secondary"}>Next</Button>
+                </Link>
+            )}
+        </div>
+    );
 
-  if (!socket) {
-    return <div>Connecting to server...</div>; // Show a loading state while the socket is being initialized
-  }
-
-  return (
-    <div className=" rounded-2xl">
-      <WebcamStream onFrameCaptured={handleFrameCaptured} />
-      <div>
-        <BendCounter count={bendCount} />
-      </div>
-      {bendCount >= 10 && (
-        <Link href="/excercise/workout">
-          <Button variant={"secondary"} className="text-1xl rounded-2xl">
-            Next
-          </Button>
-        </Link>
-      )}
-    </div>
-  );
 };
 
 export default BendDetection;

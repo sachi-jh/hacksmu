@@ -62,7 +62,7 @@ export function MainNavLinks() {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="hover:bg-main hover:text-white py-2 px-3 rounded-3xl text-2xl text-main"
+              className="hover:bg-main hover:text-white py-2 px-3 rounded-3xl text-2xl text-main  border-4 border-main"
               onClick={() =>
                 router.push("https://4525409.propelauthtest.com/account")
               }
