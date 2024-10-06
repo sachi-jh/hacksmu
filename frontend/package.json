@@ -13,6 +13,7 @@
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "@talkjs/react": "^0.1.9",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.1",
@@ -25,6 +26,7 @@
     "react-three-fiber": "^6.0.13",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "talkjs": "^0.27.0",
     "three": "^0.169.0",
     "typewriter-effect": "^2.21.0"
   },

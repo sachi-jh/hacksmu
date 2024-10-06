@@ -13,15 +13,18 @@ import {
 
 import { useUser } from "@propelauth/nextjs/client";
 import LogoutButton from "./LogoutButton";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export function MainNavLinks() {
     const { loading, user } = useUser();
+    const router = useRouter();
 
     return (
         <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <Link href="/about" legacyBehavior passHref>
+                    <Link href="/groups" legacyBehavior passHref>
                         <NavigationMenuLink
                             className={navigationMenuTriggerStyle()}
                         >
@@ -61,7 +64,18 @@ export function MainNavLinks() {
                             </NavigationMenuLink>
                         </Link>
                     ) : (
-                        <LogoutButton />
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            className="hover:bg-main hover:text-white py-2 px-3 rounded-3xl text-2xl text-main"
+                            onClick={() =>
+                                router.push(
+                                    "https://4525409.propelauthtest.com/account"
+                                )
+                            }
+                        >
+                            Profile
+                        </motion.button>
                     )}
                 </NavigationMenuItem>
             </NavigationMenuList>
