@@ -48,7 +48,7 @@ const SquatDetection: React.FC = () => {
       <div>
         <SquatCounter count={squatCount} />
       </div>
-      {squatCount >= 5 && (
+      {squatCount >= 3 && (
         <Link href="/excercise">
           <div className="flex justify-center">
             <Button

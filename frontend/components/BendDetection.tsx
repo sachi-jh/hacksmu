@@ -48,7 +48,7 @@ const BendDetection: React.FC = () => {
       <div>
         <BendCounter count={bendCount} />
       </div>
-      {bendCount >= 5 && (
+      {bendCount >= 3 && (
         <Link href="/excercise/workout">
           <div className="flex justify-center">
             <Button
