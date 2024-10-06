@@ -25,12 +25,14 @@ const GetStarted = () => {
     <div className="flex mt-12 justify-evenly min-h-screen">
       <div className="absolute left-0 w-full h-1/2 bg-white" />
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-[#3e586c] " />
-      <Image
-        src={Box}
-        alt="box"
-        className="absolute bottom-0 left-0 w-full h-1/2"
-        style={{ width: "100px", height: "75px" }}
-      />
+      <Link href="/gyatt/to/be/kidding/me">
+        <Image
+          src={Box}
+          alt="box"
+          className="absolute bottom-0 left-0 w-full h-1/2"
+          style={{ width: "100px", height: "75px" }}
+        />
+      </Link>
       <Tilt
         options={defaultOptions}
         style={{ height: 350, width: 300 }}
