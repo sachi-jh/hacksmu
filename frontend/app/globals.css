@@ -2,28 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-
-.rubik-bold {
-  font-family: "Rubik", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-}
-
-/* 
-.fredoka-regular {
-    font-family: "Fredoka", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-}
-
-.fredoka-black {
-    font-family: "Fredoka", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 800;
-} */
-
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -97,4 +75,20 @@ body {
     body {
         @apply bg-background text-foreground;
     }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Ensure the page still scrolls */
+html, body {
+    overflow-y: auto;
 }
