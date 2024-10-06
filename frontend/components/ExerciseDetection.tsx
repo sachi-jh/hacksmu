@@ -40,7 +40,7 @@ const ExerciseDetection: React.FC = () => {
   }
 
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[640px] h-[480px]">
+    <div className="absolute mt-2 left-1/2 transform -translate-x-1/2  w-[640px] h-[480px]">
       <WebcamStream onFrameCaptured={handleFrameCaptured} />
       <div>
         <SquatCounter count={count} />
