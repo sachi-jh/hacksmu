@@ -5,6 +5,12 @@ const Chatbot: React.FC = () => {
   const [userMessage, setUserMessage] = useState('');
   const [conversation, setConversation] = useState<{ role: string; content: string }[]>([]);
 
+  const defaultPrompts = [
+    { label: 'Looking for support groups', value: 'Can you help me find support groups?' },
+    { label: 'Looking for resources', value: 'What resources are available for mental health?' },
+    { label: 'Scheduling an appointment', value: 'How can I schedule an appointment?' }
+  ];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -30,6 +36,11 @@ const Chatbot: React.FC = () => {
     setUserMessage('');
   };
 
+  const handleDefaultPrompt = (prompt: string) => {
+    setUserMessage(prompt); // Set the user message to the default prompt
+    handleSubmit(new Event('submit') as unknown as React.FormEvent); // Call handleSubmit to send the prompt
+  };
+
   return (
     <div className="flex flex-col max-w-lg mx-auto bg-sky-100 shadow-lg rounded-lg overflow-hidden h-[90vh]">
       <div className="flex-1 p-6 overflow-y-auto">
@@ -43,6 +54,15 @@ const Chatbot: React.FC = () => {
             </div>
           ))}
         </div>
+        {conversation.length === 0 && ( // Show default buttons only if there's no conversation
+        <div className="flex flex-col gap-2 mb-4 align-baseline">
+          {defaultPrompts.map((prompt, index) => (
+            <button key={index} onClick={() => handleDefaultPrompt(prompt.value)} className="default-button bg-main text-white rounded-lg py-2 transition duration-300 hover:bg-cyan-600">
+              {prompt.label}
+            </button>
+          ))}
+        </div>
+      )}
       </div>
 
       <form onSubmit={handleSubmit} className="flex items-center p-4 bg-gray-100 border-t">
