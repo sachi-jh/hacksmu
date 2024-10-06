@@ -42,13 +42,13 @@ const Chatbot: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col max-w-lg mx-auto bg-sky-100 shadow-lg rounded-lg overflow-hidden h-[90vh]">
+    <div className="flex flex-col mx-auto bg-sky-100 shadow-lg rounded-lg overflow-hidden h-[80vh]">
       <div className="flex-1 p-6 overflow-y-auto">
         <div className="space-y-4">
           {conversation.map((message, index) => (
             <div
               key={index}
-              className={`p-3 rounded-lg ${message.role === 'user' ? 'bg-main text-white self-end' : 'bg-gray-200 text-gray-800 self-start'}`}
+              className={`p-3 rounded-lg ${message.role === 'user' ? 'bg-main text-white self-end' : 'bg-white text-gray-800 self-start'}`}
             >
               <strong>{message.role === 'user' ? 'You' : 'Assistant'}:</strong> {message.content}
             </div>
@@ -65,7 +65,7 @@ const Chatbot: React.FC = () => {
       )}
       </div>
 
-      <form onSubmit={handleSubmit} className="flex items-center p-4 bg-gray-100 border-t">
+      <form onSubmit={handleSubmit} className="flex items-center p-4 bg-white border-t">
         <input 
           type="text" 
           value={userMessage}
