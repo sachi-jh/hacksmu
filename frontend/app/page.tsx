@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { getUser } from "@propelauth/nextjs/server/app-router";
 import Hero from "../assets/hero.gif";
 import Wave from "../assets/wave.png";
 import Beach from "../assets/beach.png";
@@ -8,6 +7,8 @@ import Image from "next/image";
 import Clouds from "../assets/clouds.png";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { TypeAnimation } from "react-type-animation";
+import Boat from "../assets/boat.png";
 
 export default function Home() {
     const router = useRouter();
@@ -17,7 +18,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }} // Start off invisible and below its final position
                 animate={{ opacity: 1, y: 0 }} // Fade in, move up, and scale
                 transition={{ duration: 0.75 }} // Animation duration
-                className="text-gray-700 text-6xl"
+                className="text-gray-700 text-6xl mt-5"
             >
                 Welcome to Ebby
             </motion.h1>
@@ -25,11 +26,47 @@ export default function Home() {
             <motion.h1
                 initial={{ opacity: 0, y: 20 }} // Optional for the second element if you'd like a similar effect
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.2 }} // Slight delay for a staggered effect
+                transition={{ duration: 1, delay: 0.5 }} // Slight delay for a staggered effect
                 className="text-gray-700 text-2xl"
             >
                 Your personal health secretary.
             </motion.h1>
+            <motion.div
+                animate={{
+                    y: [0, 150, 0], // Moves up and down continuously
+                }}
+                transition={{
+                    opacity: { duration: 2, delay: 0.5 }, // Only animate opacity once
+                    y: {
+                        duration: 4.95, // Duration for the up-down movement
+                        repeat: Infinity, // Loops the movement animation
+                        ease: "easeInOut", // Smooth transition for movement
+                    },
+                }}
+                className="absolute text-main text-center text-[40px] mt-72 italic h-24 flex flex-col items-center z-10 w-3/4"
+            >
+                <TypeAnimation
+                    sequence={[
+                        "Life is a series of ebbs and flows. Embrace the rhythm.",
+                        3000,
+                        "All things pass",
+                        3000,
+                        "Take care of your body. It's the only place you have to live.",
+                        3000,
+                        "The greatest wealth is health.",
+                        3000,
+                        "You can't pour from an empty cup. Take care of yourself first.",
+                        3000,
+                        "Healing is not linear.",
+                        3000,
+                        "It's not the load that breaks you down, it's the way you carry it.",
+                        3000,
+                    ]}
+                    repeat={Infinity}
+                />
+                <Image src={Boat} alt="" className="h-24 w-24" />
+            </motion.div>
+
             <div className="absolute bottom-0 flex">
                 <Image src={Hero} alt="hero" width={500} height={500} />
                 <Image src={Hero} alt="hero" width={500} height={500} />
@@ -46,7 +83,7 @@ export default function Home() {
                         viewport={{ once: false }} // Animates only once when it comes into view
                     >
                         <Image
-                            className="mt-48 rounded-3xl object-cover w-full"
+                            className="mt-48 rounded-2xl object-cover w-full"
                             src={Wave}
                             alt=""
                             width={500}
@@ -63,7 +100,7 @@ export default function Home() {
                         viewport={{ once: false }} // Ensures animation happens only once
                     >
                         <Image
-                            className="mt-24 rounded-3xl object-cover w-full"
+                            className="mt-24 rounded-2xl object-cover w-full"
                             src={Clouds}
                             alt=""
                             width={500}
@@ -80,17 +117,17 @@ export default function Home() {
                         viewport={{ once: false }} // Ensures animation happens only once
                     >
                         <Image
-                            className="rounded-3xl object-cover w-full"
+                            className="rounded-2xl object-cover w-full"
                             src={Beach}
                             alt=""
                             width={500}
                         />
                     </motion.div>
                 </div>
-                <h1 className="ml-24 mt-24 font-black text-3xl">
+                <h1 className="ml-24 mt-24 font-semibold text-3xl">
                     What is Ebby exactly?
                 </h1>
-                <h1 className="mx-36 mt-5 font-semibold text-xl">
+                <h1 className="mx-36 mt-5 text-xl">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                     Labore dolorum nostrum nam accusamus iusto cum animi
                     repudiandae voluptatem necessitatibus alias perspiciatis
@@ -126,7 +163,7 @@ export default function Home() {
                         onClick={() => {
                             router.push("https://4525409.propelauthtest.com/");
                         }}
-                        className="rounded-3xl mt-10 px-3 py-2 text-main hover:bg-main hover:text-white text-3xl font-semibold"
+                        className="rounded-2xl mt-10 px-3 py-2 text-main hover:bg-main hover:text-white text-3xl font-semibold"
                     >
                         Get started
                     </motion.button>
