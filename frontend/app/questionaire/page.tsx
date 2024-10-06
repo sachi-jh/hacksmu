@@ -1,6 +1,8 @@
 "use client";
 import JoinGroup from "@/components/JoinGroup";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 type Question = {
     id: number;
@@ -15,63 +17,68 @@ type Answers = {
 const questions: Question[] = [
     {
         id: 1,
-        text: "Do you often feel overwhelming sadness or hopelessness?",
+        text: "Do you often feel overwhelmed by sadness or a sense of hopelessness that lasts for weeks?",
         category: "depression",
     },
     {
         id: 2,
-        text: "Do you experience frequent, intense anxiety or panic attacks?",
+        text: "Do you frequently experience intense anxiety or panic attacks that interfere with your daily life?",
         category: "anxiety",
     },
     {
         id: 3,
-        text: "Have you ever felt that you should cut down on your drinking?",
-        category: "alcoholic",
+        text: "Have you ever felt the need to reduce your alcohol consumption?",
+        category: "alcohol_abuse",
     },
     {
         id: 4,
-        text: "Do you use drugs other than those required for medical reasons?",
-        category: "substance_abuse",
+        text: "Do you use recreational drugs or prescription medications not as directed by a doctor?",
+        category: "drug_abuse",
     },
     {
         id: 5,
-        text: "Do you often feel preoccupied with your body shape or weight?",
+        text: "Are you often preoccupied with thoughts about your body weight or shape, leading to unhealthy behaviors?",
         category: "eating_disorders",
     },
     {
         id: 6,
-        text: "Have you experienced a traumatic event that still affects you today?",
-        category: "ptsd",
+        text: "Do you experience persistent feelings of stress or anxiety related to work, school, or personal relationships?",
+        category: "stress",
     },
     {
         id: 7,
-        text: "Do you have difficulty controlling your anger?",
+        text: "Do you struggle with controlling your anger, often resulting in conflict or regret?",
         category: "anger_management",
     },
     {
         id: 8,
-        text: "Do you struggle with maintaining relationships due to intense emotions?",
+        text: "Do you find it challenging to maintain relationships because of your intense emotional reactions?",
         category: "borderline",
     },
     {
         id: 9,
-        text: "Do you experience extreme mood swings, including emotional highs?",
+        text: "Do you experience extreme mood swings, including periods of high energy followed by deep lows?",
         category: "bipolar",
     },
     {
         id: 10,
-        text: "Do you have persistent thoughts or behaviors that interfere with daily life?",
+        text: "Do you have intrusive thoughts or compulsive behaviors that disrupt your daily life?",
         category: "ocd",
     },
 ];
 
 const Questionnaire: React.FC = () => {
+    const router = useRouter();
     const [answers, setAnswers] = useState<Answers>({});
-    const [results, setResults] = useState<string[]>([]);
+    const [recommendedGroups, setRecommendedGroups] = useState<string[]>([]); // New state variable
 
     const handleAnswer = (questionId: number, value: "yes" | "no") => {
         setAnswers((prev) => ({ ...prev, [questionId]: value }));
     };
+
+    useEffect(() => {
+        console.log("rc", recommendedGroups);
+    }, [recommendedGroups]);
 
     const calculateResults = () => {
         const categories = Object.entries(answers).reduce(
@@ -90,27 +97,37 @@ const Questionnaire: React.FC = () => {
             {}
         );
 
-        // Sort categories by count and get top 3 (or all if less than 3)
-        const sortedCategories = Object.entries(categories)
-            .sort(([, a], [, b]) => b - a)
-            .slice(0, 3)
-            .map(([category]) => category);
+        // Get all unique categories that received "yes" responses
+        const uniqueCategories = Object.keys(categories);
+        console.log("Unique Categories:", uniqueCategories);
 
-        setResults(sortedCategories);
+        // Use a Set to avoid duplicates
+        const groupsSet = new Set<string>();
+
+        // Map unique categories to their respective support group names
+        uniqueCategories.forEach((category) => {
+            const groupName = getSupportGroupName(category);
+            console.log(`Group for category '${category}':`, groupName);
+            groupsSet.add(groupName);
+        });
+
+        // Convert Set back to an array
+        const groupsUnique = Array.from(groupsSet);
+        console.log("Unique Groups:", groupsUnique);
+
+        // Save unique categories and recommended support groups to state
+        setRecommendedGroups(groupsUnique); // Save all recommended support groups
     };
 
     const getSupportGroupName = (category: string): string => {
         const groupNames: { [key: string]: string } = {
             depression: "Depression Support Group",
             anxiety: "Anxiety Support Group",
-            alcoholic: "Alcoholics Anonymous",
-            substance_abuse: "Substance Abuse Recovery Group",
+            alcohol_abuse: "Alcoholics Anonymous",
+            drug_abuse: "Substance Abuse Recovery Group",
             eating_disorders: "Eating Disorders Support Group",
-            ptsd: "PTSD Support Group",
+            stress: "Stress Management Group",
             anger_management: "Anger Management Group",
-            borderline: "Borderline Personality Disorder Support Group",
-            bipolar: "Bipolar Disorder Support Group",
-            ocd: "OCD Support Group",
         };
         return groupNames[category] || "General Mental Health Support Group";
     };
@@ -125,7 +142,7 @@ const Questionnaire: React.FC = () => {
                     <p className="mb-2">{question.text}</p>
                     <div>
                         <button
-                            className={`mr-2 px-3 py-1 rounded ${
+                            className={`mr-2 px-3 py-1 rounded-2xl ${
                                 answers[question.id] === "yes"
                                     ? "bg-main text-white"
                                     : "bg-gray-200"
@@ -135,7 +152,7 @@ const Questionnaire: React.FC = () => {
                             Yes
                         </button>
                         <button
-                            className={`px-3 py-1 rounded ${
+                            className={`px-3 py-1 rounded-2xl ${
                                 answers[question.id] === "no"
                                     ? "bg-main text-white"
                                     : "bg-gray-200"
@@ -148,20 +165,20 @@ const Questionnaire: React.FC = () => {
                 </div>
             ))}
             <button
-                className="bg-main text-white px-4 py-2 rounded mt-4 hover:scale-110 transition-all"
+                className="bg-main text-white px-4 py-2 rounded-2xl mt-4 hover:scale-110 transition-all"
                 onClick={calculateResults}
             >
-                Submit
+                Submit (then scroll down)
             </button>
-            {results.length > 0 && (
+            {recommendedGroups.length > 0 && (
                 <div className="mt-4">
                     <h2 className="text-xl font-semibold">
                         Recommended Support Groups:
                     </h2>
                     <ul className="list-disc pl-5 mt-2">
-                        {results.map((category, index) => (
+                        {recommendedGroups.map((category, index) => (
                             <li key={index} className="text-lg">
-                                {getSupportGroupName(category)}
+                                {category}
                             </li>
                         ))}
                     </ul>
@@ -171,8 +188,29 @@ const Questionnaire: React.FC = () => {
                         professional for a comprehensive evaluation and
                         personalized advice.
                     </p>
-                    <h1 className="text-xl my-10">Join By Clicking On Cards Below</h1>
-                    <JoinGroup name="Depression Support Group" />
+                    <h1 className="text-xl my-10">
+                        Join By Clicking On Cards Below
+                    </h1>
+                    <div className="flex flex-wrap justify-left gap-5">
+                        {recommendedGroups.map((group) => (
+                            <JoinGroup
+                                key={group}
+                                name={group}
+                                conversationID={group}
+                            />
+                        ))}
+                    </div>
+
+                    <div className="flex justify-center my-16">
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            className="bg-main text-white px-4 py-2 rounded-2xl hover:scale-110 transition-all text-3xl"
+                            onClick={() => router.push("/groups")}
+                        >
+                            Return to Groups
+                        </motion.button>
+                    </div>
                 </div>
             )}
         </div>
