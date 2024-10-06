@@ -35,7 +35,7 @@ export function MainNavLinks() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/login" legacyBehavior passHref>
+          <Link href="/ebby" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Ebby
             </NavigationMenuLink>
