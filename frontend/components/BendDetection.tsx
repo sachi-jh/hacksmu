@@ -50,12 +50,18 @@ const BendDetection: React.FC = () => {
             </div>
             {bendCount >= 10 && (
                 <Link href="/excercise/workout">
-                    <Button variant={"secondary"}>Next</Button>
+                    <div className="flex justify-center">
+                        <Button
+                            variant={"secondary"}
+                            className="rounded-2xl text-4xl px-5 py-4 mb-5"
+                        >
+                            Next
+                        </Button>
+                    </div>
                 </Link>
             )}
         </div>
     );
-
 };
 
 export default BendDetection;
