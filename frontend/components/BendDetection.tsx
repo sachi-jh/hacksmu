@@ -42,7 +42,6 @@ const BendDetection: React.FC = () => {
     if (!socket) {
         return <div>Connecting to server...</div>; // Show a loading state while the socket is being initialized
     }
-
     return (
         <div>
             <WebcamStream onFrameCaptured={handleFrameCaptured} />
@@ -56,6 +55,7 @@ const BendDetection: React.FC = () => {
             )}
         </div>
     );
+
 };
 
 export default BendDetection;
