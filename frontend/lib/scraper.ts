@@ -3,7 +3,7 @@ import cheerio from 'cheerio';
 
 // Function to scrape a URL using ScraperAPI
 export async function scrapeWithScraperAPI(url: string) {
-  const API_KEY = 'a8c0494f97966a697eae597bd17e6a90'; // Replace with your ScraperAPI key
+  const API_KEY = ''; // Replace with your ScraperAPI key
   const apiUrl = `http://api.scraperapi.com?api_key=${API_KEY}&url=${url}`;
 
   try {
